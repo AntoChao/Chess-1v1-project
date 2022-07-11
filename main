@@ -1,13 +1,16 @@
 import numpy as np
+import pandas as pd
 
-#Create all posible movement:
-#Movement function witch return True or False, if return True, is a valid move, then the destination can be replaced, elif return False, something is wrong
+
+# Create all posible movement:
+# Movement function witch return True or False, if return True, is a valid move, then the destination can be replaced, elif return False, something is wrong
 def checkPieceDifDestination(Coordinade_ChosenPiece, Coordinade_Destination):
     if Coordinade_ChosenPiece == Coordinade_Destination:
         print("Error: The start and destination are the same")
         return False
     else:
         return True
+
 
 def checkTheDestination(PieceToMove, DestinationValue):
     if (DestinationValue == None):
@@ -18,6 +21,7 @@ def checkTheDestination(PieceToMove, DestinationValue):
         print("Error: Destination is a Piece of same colour")
         return False
 
+
 def checkPieceToMove(PieceToMove):
     if PieceToMove != None:
         return True
@@ -25,18 +29,21 @@ def checkPieceToMove(PieceToMove):
         print("Error: No valid Chosen Piece, a None value")
         False
 
-def checkColour(PieceToMove,TrueColor):
+
+def checkColour(PieceToMove, TrueColor):
     if PieceToMove.colour == TrueColor:
         return True
     else:
         print("Wrong color Piece choosen")
         return False
 
+
 def checkingInputs(PieceToMove, DestinationValue, Coordinade_ChosenPiece, Coordinade_Destination, TrueColor):
     if checkPieceToMove(PieceToMove) and checkPieceDifDestination(Coordinade_ChosenPiece, Coordinade_Destination):
-        return checkTheDestination(PieceToMove, DestinationValue) and checkColour(PieceToMove,TrueColor)
+        return checkTheDestination(PieceToMove, DestinationValue) and checkColour(PieceToMove, TrueColor)
     else:
         return False
+
 
 def checkKingSituation(DestinationValue):
     if DestinationValue != None:
@@ -47,14 +54,15 @@ def checkKingSituation(DestinationValue):
     else:
         return False
 
+
 def xmovement(PieceToMove, Coordinade_ChosenPiece, Coordinade_Destination):
-    difference = abs(Coordinade_ChosenPiece[1]-Coordinade_Destination[1])
+    difference = abs(Coordinade_ChosenPiece[1] - Coordinade_Destination[1])
     if Coordinade_ChosenPiece[0] == Coordinade_Destination[0]:
         if (PieceToMove.name == "king") and (difference == 1):
             return True
         else:
-            for i in range (Coordinade_ChosenPiece[1], Coordinade_Destination[1]):
-                if Board[Coordinade_Destination[0]][i]== None:
+            for i in range(Coordinade_ChosenPiece[1], Coordinade_Destination[1]):
+                if Board[Coordinade_Destination[0]][i] == None:
                     pass
                 else:
                     print("No valid Xmovement")
@@ -63,8 +71,9 @@ def xmovement(PieceToMove, Coordinade_ChosenPiece, Coordinade_Destination):
         return False
     return True
 
+
 def ymovement(PieceToMove, Coordinade_ChosenPiece, Coordinade_Destination):
-    difference = abs(Coordinade_ChosenPiece[0]-Coordinade_Destination[0])
+    difference = abs(Coordinade_ChosenPiece[0] - Coordinade_Destination[0])
     if Coordinade_ChosenPiece[1] == Coordinade_Destination[1]:
         if PieceToMove.name == "pawn" and difference == 2:
             return True
@@ -80,10 +89,12 @@ def ymovement(PieceToMove, Coordinade_ChosenPiece, Coordinade_Destination):
     else:
         return False
     return True
-    difference = abs(Coordinade_ChosenPiece[1]-Coordinade_Destination[1])
+    difference = abs(Coordinade_ChosenPiece[1] - Coordinade_Destination[1])
     if Coordinade_ChosenPiece[0] == Coordinade_Destination[0]:
         if (PieceToMove.name == "king") and (difference == 1):
             return True
+
+
 def knightMovement(Coordinade_ChosenPiece, Coordinade_Destination):
     differenceX = abs(Coordinade_ChosenPiece[0] - Coordinade_Destination[0])
     differenceY = abs(Coordinade_ChosenPiece[1] - Coordinade_Destination[1])
@@ -97,8 +108,9 @@ def knightMovement(Coordinade_ChosenPiece, Coordinade_Destination):
         print("No valid move for knight")
         return False
 
+
 def diagonal(PieceToMove, DestinationValue, Coordinade_ChosenPiece, Coordinade_Destination):
-    diffrence = abs(Coordinade_Destination[0]-Coordinade_ChosenPiece[0])
+    diffrence = abs(Coordinade_Destination[0] - Coordinade_ChosenPiece[0])
     if PieceToMove.name == "king":
         if (diffrence == 1):
             return True
@@ -110,14 +122,14 @@ def diagonal(PieceToMove, DestinationValue, Coordinade_ChosenPiece, Coordinade_D
         else:
             return False
     else:
-        for i in range(diffrence-1):
+        for i in range(diffrence - 1):
             x = Coordinade_ChosenPiece[0]
             y = Coordinade_ChosenPiece[1]
-            if(Coordinade_Destination[0]<Coordinade_ChosenPiece[0]):
+            if (Coordinade_Destination[0] < Coordinade_ChosenPiece[0]):
                 x -= 1
             else:
                 x += 1
-            if(Coordinade_Destination[1]<Coordinade_ChosenPiece[1]):
+            if (Coordinade_Destination[1] < Coordinade_ChosenPiece[1]):
                 y -= 1
             else:
                 y += 1
@@ -127,74 +139,95 @@ def diagonal(PieceToMove, DestinationValue, Coordinade_ChosenPiece, Coordinade_D
                 return False
         return True
 
+
 def moveThePiece(PieceToMove, DestinationValue, Coordinade_ChosenPiece, Coordinade_Destination):
     if PieceToMove.name == "pawn":
-        return ymovement(PieceToMove, Coordinade_ChosenPiece, Coordinade_Destination) or diagonal(PieceToMove, DestinationValue, Coordinade_ChosenPiece, Coordinade_Destination)
+        return ymovement(PieceToMove, Coordinade_ChosenPiece, Coordinade_Destination) or diagonal(PieceToMove,
+                                                                                                  DestinationValue,
+                                                                                                  Coordinade_ChosenPiece,
+                                                                                                  Coordinade_Destination)
     elif PieceToMove.name == "knight":
         return knightMovement(Coordinade_ChosenPiece, Coordinade_Destination)
     elif PieceToMove.name == "rook":
-        return xmovement(PieceToMove, Coordinade_ChosenPiece, Coordinade_Destination) or ymovement(PieceToMove, Coordinade_ChosenPiece, Coordinade_Destination),
+        return xmovement(PieceToMove, Coordinade_ChosenPiece, Coordinade_Destination) or ymovement(PieceToMove,
+                                                                                                   Coordinade_ChosenPiece,
+                                                                                                   Coordinade_Destination),
     elif PieceToMove.name == "king":
-        return xmovement(PieceToMove, Coordinade_ChosenPiece, Coordinade_Destination) or ymovement(PieceToMove, Coordinade_ChosenPiece, Coordinade_Destination) or diagonal(PieceToMove, DestinationValue, Coordinade_ChosenPiece, Coordinade_Destination),
+        return xmovement(PieceToMove, Coordinade_ChosenPiece, Coordinade_Destination) or ymovement(PieceToMove,
+                                                                                                   Coordinade_ChosenPiece,
+                                                                                                   Coordinade_Destination) or diagonal(
+            PieceToMove, DestinationValue, Coordinade_ChosenPiece, Coordinade_Destination),
     elif PieceToMove.name == "queen":
-        return xmovement(PieceToMove, Coordinade_ChosenPiece, Coordinade_Destination) or ymovement(PieceToMove, Coordinade_ChosenPiece, Coordinade_Destination) or diagonal( PieceToMove, DestinationValue, Coordinade_ChosenPiece, Coordinade_Destination)
+        return xmovement(PieceToMove, Coordinade_ChosenPiece, Coordinade_Destination) or ymovement(PieceToMove,
+                                                                                                   Coordinade_ChosenPiece,
+                                                                                                   Coordinade_Destination) or diagonal(
+            PieceToMove, DestinationValue, Coordinade_ChosenPiece, Coordinade_Destination)
     elif PieceToMove.name == "bishop":
         return diagonal(PieceToMove, DestinationValue, Coordinade_ChosenPiece, Coordinade_Destination)
     else:
         print("something is wrong")
 
-#Create all pieces classes
+
+# Create all pieces classes
 class Pawn:
     def __init__(self, name, colour):
         self.name = name
         self.colour = colour
+
 
 class Knight:
     def __init__(self, name, colour):
         self.name = name
         self.colour = colour
 
+
 class Bishop:
     def __init__(self, name, colour):
         self.name = name
         self.colour = colour
+
 
 class Rook:
     def __init__(self, name, colour):
         self.name = name
         self.colour = colour
 
+
 class Queen:
     def __init__(self, name, colour):
         self.name = name
         self.colour = colour
+
 
 class King:
     def __init__(self, name, colour):
         self.name = name
         self.colour = colour
 
+
 def conjunction(self):
     return "{}{}".format(self.name[:1], self.colour[:1])
 
-#Create all pieces
-pawn_Black = Pawn("pawn","Black")
-pawn_White = Pawn("pawn","White")
 
-knight_Black = Knight("knight","Black")
-knight_White = Knight("knight","White")
+# Create all pieces
+pawn_Black = Pawn("pawn", "Black")
+pawn_White = Pawn("pawn", "White")
 
-bishop_Black = Bishop("bishop","Black")
-bishop_White = Bishop("bishop","White")
+knight_Black = Knight("knight", "Black")
+knight_White = Knight("knight", "White")
 
-rook_Black = Rook("rook","Black")
-rook_White = Rook("rook","White")
+bishop_Black = Bishop("bishop", "Black")
+bishop_White = Bishop("bishop", "White")
 
-queen_Black = Queen("queen","Black")
-queen_White = Queen("queen","White")
+rook_Black = Rook("rook", "Black")
+rook_White = Rook("rook", "White")
 
-king_Black = King("king","Black")
-king_White = King("king","White")
+queen_Black = Queen("queen", "Black")
+queen_White = Queen("queen", "White")
+
+king_Black = King("king", "Black")
+king_White = King("king", "White")
+
 
 def initBoard():
     board = np.empty((8, 8), dtype=object)
@@ -234,8 +267,9 @@ def initBoard():
 
     return board
 
+
 def showBoard():
-    BoardToShow = np.empty((8, 8), dtype = object)
+    BoardToShow = np.empty((8, 8), dtype=object)
     for i in range(8):
         for j in range(8):
             PieceToShow = Board[i][j]
@@ -243,24 +277,59 @@ def showBoard():
                 BoardToShow[i][j] = "     "
             else:
                 if len(PieceToShow.name) > 5:
-                    name = "{}{}".format(PieceToShow.name[:-2],PieceToShow.colour[0])
-                elif len(PieceToShow.name) == 5 :
+                    name = "{}{}".format(PieceToShow.name[:-2], PieceToShow.colour[0])
+                elif len(PieceToShow.name) == 5:
                     name = "{}{}".format(PieceToShow.name[:-1], PieceToShow.colour[0])
                 else:
-                    name = "{}{}".format(PieceToShow.name,PieceToShow.colour[0])
+                    name = "{}{}".format(PieceToShow.name, PieceToShow.colour[0])
                 BoardToShow[i][j] = name.ljust(5)
 
-    print(BoardToShow)
+    columnList = ["A", "B", "C", "D", "E", "F", "G", "H", ]
+    indexList = [1, 2, 3, 4, 5, 6, 7, 8]
+    df = pd.DataFrame(BoardToShow, columns=columnList, index=indexList)
+    print(df)
+
+
+def switch(Value):
+    ValueToReturn = 0
+    if Value == "A":
+        ValueToReturn = 1
+        return ValueToReturn
+    elif Value == "B":
+        ValueToReturn = 2
+        return ValueToReturn
+    elif Value == "C":
+        ValueToReturn = 3
+        return ValueToReturn
+    elif Value == "D":
+        ValueToReturn = 4
+        return ValueToReturn
+    elif Value == "E":
+        ValueToReturn = 5
+        return ValueToReturn
+    elif Value == "F":
+        ValueToReturn = 6
+        return ValueToReturn
+    elif Value == "G":
+        ValueToReturn = 7
+        return ValueToReturn
+    elif Value == "H":
+        ValueToReturn = 8
+        return ValueToReturn
+    else:
+        print("error input")
 
 def choosePiece():
-    XValue = input("Enter the X value of Piece to move: ")
-    YValue = input("Enter the Y value of Piece to move: ")
-    return (int(XValue)-1, int(YValue)-1)
+    XValue = input("Enter the Row value of Piece to move: ")
+    YValue = input("Enter the Column value of Piece to move: ")
+    YValue = switch(YValue)
+    return (int(XValue) - 1, int(YValue) - 1)
 
 def chooseDestination():
-    XValue = input("Enter the X value of Destination: ")
-    YValue = input("Enter the Y value of Destination: ")
-    return (int(XValue)-1, int(YValue)-1)
+    XValue = input("Enter the Row value of Destination: ")
+    YValue = input("Enter the Column value of Destination: ")
+    YValue = switch(YValue)
+    return (int(XValue) - 1, int(YValue) - 1)
 
 def main():
     round = 0
@@ -281,10 +350,12 @@ def main():
 
     print("{}{}".format("Congratulations to the WINNER side: ", Color))
 
-#Basic Elements
+
+# Basic Elements
 Board = initBoard()
 
-#Player Action
+
+# Player Action
 def timeToWin(TrueColor):
     Coordinade_ChosenPiece = choosePiece()
     Coordinade_Destination = chooseDestination()
@@ -299,5 +370,5 @@ def timeToWin(TrueColor):
 
     return checkKingSituation(DestinationValue)
 
-#Call main
+# Call main
 main()
